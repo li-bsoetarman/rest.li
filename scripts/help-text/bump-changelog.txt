@@ -1,0 +1,9 @@
+Usage: ./scripts/bump-changelog [OPTION]...
+Moves everything under the "Unreleased" heading of the changelog to a new version heading based on the version number
+found in the gradle.properties file. Also takes care of updating and inserting links as appropriate.
+
+Options:
+  -h, --help                    print this help text and exit
+
+Examples:
+  ./scripts/bump-changelog      bumps the changelog

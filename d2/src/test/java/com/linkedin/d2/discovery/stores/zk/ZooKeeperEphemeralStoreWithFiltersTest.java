@@ -235,7 +235,7 @@ public class ZooKeeperEphemeralStoreWithFiltersTest
   {
     try
     {
-      _zkServer = new ZKServer();
+      _zkServer = new ZKServer(52181);
       _zkServer.startup();
       _port = _zkServer.getPort();
       _zkClient = new ZKConnection("localhost:" + _port, 5000);

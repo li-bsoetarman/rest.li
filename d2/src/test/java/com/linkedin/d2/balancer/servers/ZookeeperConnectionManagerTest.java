@@ -51,7 +51,7 @@ public class ZookeeperConnectionManagerTest
 {
   private static final Logger LOG = LoggerFactory.getLogger(ZookeeperConnectionManagerTest.class);
 
-  public static final int PORT = 11811;
+  public static int PORT = 0;
 
   protected ZKServer _zkServer;
   private String _uri;
@@ -70,6 +70,7 @@ public class ZookeeperConnectionManagerTest
     try
     {
       _zkServer = new ZKServer(PORT);
+      PORT = _zkServer.getPort();
       _zkServer.startup();
     }
     catch (IOException e)

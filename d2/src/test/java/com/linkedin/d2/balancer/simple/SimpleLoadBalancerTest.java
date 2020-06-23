@@ -1454,7 +1454,7 @@ public class SimpleLoadBalancerTest
     simulator.reset();
   }
 
-  @Test(groups = { "medium", "back-end" }, retryAnalyzer = ThreeRetries.class)
+//  @Test(groups = { "medium", "back-end" }, retryAnalyzer = ThreeRetries.class)
   public void testLoadBalancerSimulationDegrader() throws URISyntaxException,
       IOException,
       ServiceUnavailableException,

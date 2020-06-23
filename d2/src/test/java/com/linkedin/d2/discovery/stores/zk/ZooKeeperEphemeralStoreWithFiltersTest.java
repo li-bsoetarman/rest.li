@@ -39,8 +39,8 @@ import com.linkedin.d2.discovery.stores.PropertyStoreException;
 
 import static org.testng.Assert.fail;
 import org.testng.Assert;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -229,7 +229,7 @@ public class ZooKeeperEphemeralStoreWithFiltersTest
     }
   }
 
-  @BeforeSuite
+  @BeforeMethod
   public void setup()
     throws InterruptedException
   {
@@ -247,7 +247,7 @@ public class ZooKeeperEphemeralStoreWithFiltersTest
     }
   }
 
-  @AfterSuite
+  @AfterMethod
   public void tearDown()
     throws IOException, InterruptedException
   {

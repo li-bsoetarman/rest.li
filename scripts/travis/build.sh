@@ -18,7 +18,8 @@ else
 fi
 
 # Run the actual build
-./gradlew build $EXTRA_ARGS
+#./gradlew build $EXTRA_ARGS
+./gradlew --rerun-tasks :d2:test
 EXIT_CODE=$?
 
 # Kill the waiter job

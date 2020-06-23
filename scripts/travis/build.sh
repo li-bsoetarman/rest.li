@@ -19,7 +19,7 @@ fi
 
 # Run the actual build
 #./gradlew build $EXTRA_ARGS
-./gradlew --rerun-tasks :d2:test
+./gradlew --rerun-tasks :d2:test --tests *ZooKeeperEphemeralStoreWithFiltersTest*
 EXIT_CODE=$?
 
 # Kill the waiter job

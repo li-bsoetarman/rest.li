@@ -108,8 +108,8 @@ import java.util.stream.StreamSupport;
 import javax.annotation.Nonnull;
 import org.apache.commons.io.FileUtils;
 import org.testng.Assert;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -130,13 +130,13 @@ public class SimpleLoadBalancerTest
 
   private ScheduledExecutorService _d2Executor;
 
-  @BeforeSuite
+  @BeforeMethod
   public void initialize()
   {
     _d2Executor = Executors.newSingleThreadScheduledExecutor(new NamedThreadFactory("D2 PropertyEventExecutor for Tests"));
   }
 
-  @AfterSuite
+  @AfterMethod
   public void shutdown()
   {
     _d2Executor.shutdown();

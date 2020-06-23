@@ -25,7 +25,7 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadLocalRandom;
+//import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -162,7 +162,7 @@ public class ZooKeeperEphemeralStoreWithFiltersTest
     for (int i = 0; i < 25; i++)
     {
       data[i][0] = "D2Test1Cluster" + i;
-      data[i][1] = ThreadLocalRandom.current().nextInt(25) + 1;
+      data[i][1] = i + 1; //ThreadLocalRandom.current().nextInt(25) + 1;
     }
 
     return data;
@@ -176,7 +176,7 @@ public class ZooKeeperEphemeralStoreWithFiltersTest
     // 25 test cases with shared prefix generator
     for (int i = 0; i < 25; i++)
     {
-      int numChildren = ThreadLocalRandom.current().nextInt(25) + 1;
+      int numChildren = i + 1; //ThreadLocalRandom.current().nextInt(25) + 1;
       List<String> children = new ArrayList<>();
       List<ZookeeperEphemeralPrefixGenerator> prefixGenerators = new ArrayList<>();
       AnnouncerHostPrefixGenerator generator = new AnnouncerHostPrefixGenerator("test-machine.subdomain1.subdomain2.com");
@@ -195,7 +195,7 @@ public class ZooKeeperEphemeralStoreWithFiltersTest
     // 25 test cases with unique prefix generator
     for (int i = 25; i < 50; i++)
     {
-      int numChildren = ThreadLocalRandom.current().nextInt(25) + 1;
+      int numChildren = i - 24; //ThreadLocalRandom.current().nextInt(25) + 1;
       List<String> children = new ArrayList<>();
       List<ZookeeperEphemeralPrefixGenerator> prefixGenerators = new ArrayList<>();
       for (int j = 0; j < numChildren; j++)

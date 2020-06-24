@@ -198,6 +198,7 @@ public class HttpServerBuilder
         server,
         httpConnectionFactory,
         h2cConnectionFactory);
+    http.setAcceptQueueSize(100);
     http.setIdleTimeout(_idleTimeout);
     http.setPort(HTTP_PORT);
     server.addConnector(http);

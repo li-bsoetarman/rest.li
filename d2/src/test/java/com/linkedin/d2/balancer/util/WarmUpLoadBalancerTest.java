@@ -104,6 +104,8 @@ public class WarmUpLoadBalancerTest
     callback.get(1, TimeUnit.MINUTES);
      
     Assert.assertTrue(callback.isDone());
+     
+    Thread.sleep(30000);
 
     FutureCallback<None> shutdownCallback = new FutureCallback<>();
     warmUpLoadBalancer.shutdown(() -> shutdownCallback.onSuccess(None.none()));

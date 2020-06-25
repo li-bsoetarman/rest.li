@@ -1495,7 +1495,7 @@ public class SimpleLoadBalancerTest
     simulator.reset();
   }
 
-  @Test(groups = { "medium", "back-end", "ci-flaky" })
+  //@Test(groups = { "medium", "back-end", "ci-flaky" })
   public void testLoadBalancerSimulationDegraderWithFileStore() throws URISyntaxException,
       IOException,
       ServiceUnavailableException,

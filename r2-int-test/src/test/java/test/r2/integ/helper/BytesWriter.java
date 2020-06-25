@@ -27,6 +27,11 @@ public class BytesWriter implements Writer
     _written = 0;
   }
 
+  public long getWritten()
+  {
+    return _written;
+  }
+
   @Override
   public void onInit(WriteHandle wh)
   {

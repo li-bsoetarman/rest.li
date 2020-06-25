@@ -83,7 +83,7 @@ public class WarmUpLoadBalancerTest
     Assert.assertEquals(VALID_FILES.size(), requestCount.get());
   }
 
-  @Test //(timeOut = 10000, groups = { "ci-flaky" })
+  @Test(timeOut = 60000, groups = { "ci-flaky" })
   public void testDeletingFilesAfterShutdown() throws InterruptedException, ExecutionException, TimeoutException
   {
     createDefaultServicesIniFiles();

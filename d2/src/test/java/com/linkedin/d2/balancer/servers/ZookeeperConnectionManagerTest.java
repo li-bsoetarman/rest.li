@@ -448,7 +448,9 @@ public class ZookeeperConnectionManagerTest
 
     FutureCallback<None> managerStartCallback = new FutureCallback<None>();
     manager.start(managerStartCallback);
-    managerStartCallback.get(10, TimeUnit.SECONDS);
+    managerStartCallback.get(1, TimeUnit.MINUTES);
+    
+    Assert.assertTrue(managerStartCallback.isDone());
 
     // set up many concurrent callbacks
     FutureCallback<None> allMarkupsDownsSucceed = new FutureCallback<>();

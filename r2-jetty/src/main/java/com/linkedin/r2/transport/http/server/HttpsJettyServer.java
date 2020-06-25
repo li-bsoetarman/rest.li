@@ -74,6 +74,7 @@ public class HttpsJettyServer extends HttpJettyServer
         server,
         sslContextFactory,
         new HttpConnectionFactory(configuration, HttpCompliance.RFC2616));
+    sslConnector.setAcceptQueueSize(100);
     sslConnector.setPort(_sslPort);
 
     Connector[] httpConnectors = super.getConnectors(server);

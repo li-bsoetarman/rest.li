@@ -9,10 +9,19 @@ public class TimedBytesWriter extends BytesWriter
 {
   private long _startTime;
   private long _stopTime;
+  private StringBuilder _sb = new StringBuilder();
+
+  public String getLog()
+  {
+    return _sb.toString();
+  }
+
+  private long _total;
 
   public TimedBytesWriter(long total, byte fill)
   {
     super(total, fill);
+    _total = total;
   }
 
   @Override
@@ -25,12 +34,14 @@ public class TimedBytesWriter extends BytesWriter
   @Override
   public void onWritePossible()
   {
+    _sb.append(System.nanoTime()).append(" ").append("total=").append(_total).append(" written=").append(getWritten()).append("\n");
     super.onWritePossible();
   }
 
   @Override
   protected void onFinish()
   {
+    _sb.append(System.nanoTime()).append(" ").append("total=").append(_total).append(" written=").append(getWritten()).append("\n");
     super.onFinish();
     _stopTime = System.currentTimeMillis();
   }

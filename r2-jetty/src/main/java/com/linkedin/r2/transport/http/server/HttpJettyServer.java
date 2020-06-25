@@ -167,6 +167,7 @@ public class HttpJettyServer implements HttpServer
     ServerConnector connector = new ServerConnector(
         server,
         new HttpConnectionFactory(configuration, HttpCompliance.RFC2616));
+    connector.setAcceptQueueSize(100);
     connector.setPort(_port);
     return new Connector[] { connector };
   }

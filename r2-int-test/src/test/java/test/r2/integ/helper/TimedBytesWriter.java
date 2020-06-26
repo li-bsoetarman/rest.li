@@ -35,7 +35,7 @@ public class TimedBytesWriter extends BytesWriter
   public void onWritePossible()
   {
     long written = getWritten();
-    if (written >= (total - 10))
+    if (written >= (_total - 10))
     {
     _sb.append(System.nanoTime()).append(" ").append("total=").append(_total).append(" written=").append(written).append("\n");
     }

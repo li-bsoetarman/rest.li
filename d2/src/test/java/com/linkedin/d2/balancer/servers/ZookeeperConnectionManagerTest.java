@@ -466,6 +466,8 @@ public class ZookeeperConnectionManagerTest
       });
     }
     allMarkupsDownsSucceed.get();
+    
+    Thread.sleep(10000);
 
     // data validation
     dataValidation(_uri, _cluster, WEIGHT);

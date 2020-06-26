@@ -34,14 +34,18 @@ public class TimedBytesWriter extends BytesWriter
   @Override
   public void onWritePossible()
   {
-//    _sb.append(System.nanoTime()).append(" ").append("total=").append(_total).append(" written=").append(getWritten()).append("\n");
+    long written = getWritten();
+    if (written >= (total - 10))
+    {
+    _sb.append(System.nanoTime()).append(" ").append("total=").append(_total).append(" written=").append(written).append("\n");
+    }
     super.onWritePossible();
   }
 
   @Override
   protected void onFinish()
   {
-//    _sb.append(System.nanoTime()).append(" ").append("total=").append(_total).append(" written=").append(getWritten()).append("\n");
+    _sb.append(System.nanoTime()).append(" onFinish:").append("total=").append(_total).append(" written=").append(getWritten()).append("\n");
     _stopTime = System.currentTimeMillis();
     super.onFinish();
   }

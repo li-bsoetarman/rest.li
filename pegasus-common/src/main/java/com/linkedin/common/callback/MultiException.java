@@ -23,6 +23,9 @@ package com.linkedin.common.callback;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 
 /**
  * An exception representing multiple exceptions. Useful for example to deliver multiple

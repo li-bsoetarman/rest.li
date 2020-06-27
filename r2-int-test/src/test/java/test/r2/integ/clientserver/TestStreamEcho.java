@@ -134,7 +134,16 @@ public class TestStreamEcho extends AbstractServiceTest
   @Test //(groups = { "ci-flaky" })
   public void testBackPressureEcho() throws Exception
   {
-    TimedBytesWriter writer = new TimedBytesWriter(SMALL_BYTES_NUM, BYTE);
+    final CountDownLatch writerLatch = new CountDownLatch(1);
+    TimedBytesWriter writer = new TimedBytesWriter(SMALL_BYTES_NUM, BYTE)
+    {
+      @Override
+      protected void onFinish()
+      {
+        super.onFinish();
+        writerLatch.countDown();
+      }
+    };
     StreamRequest request = new StreamRequestBuilder(_clientProvider.createHttpURI(_port, ECHO_URI))
         .build(EntityStreams.newEntityStream(writer));
 
@@ -173,6 +182,7 @@ public class TestStreamEcho extends AbstractServiceTest
 
     _client.streamRequest(request, callback);
     latch.await(60000, TimeUnit.MILLISECONDS);
+    writerLatch.await(60000, TimeUnit.MILLISECONDS);
     Assert.assertNull(error.get());
     Assert.assertEquals(status.get(), RestStatus.OK);
     Assert.assertEquals(reader.getTotalBytes(), SMALL_BYTES_NUM);

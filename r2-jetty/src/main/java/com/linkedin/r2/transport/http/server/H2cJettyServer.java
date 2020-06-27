@@ -45,6 +45,7 @@ public class H2cJettyServer extends HttpJettyServer
         server,
         new HttpConnectionFactory(configuration, HttpCompliance.RFC2616),
         new HTTP2CServerConnectionFactory(configuration));
+    connector.setAcceptQueueSize(100);    
     connector.setPort(_port);
 
     return new Connector[] { connector };

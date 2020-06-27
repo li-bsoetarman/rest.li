@@ -22,6 +22,7 @@ package test.r2.callback;
 
 import com.linkedin.common.callback.MultiException;
 import org.testng.Assert;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import java.io.PrintWriter;
@@ -33,6 +34,7 @@ import java.util.Collections;
  * @version $Revision: $
  */
 
+@Ignore
 public class MultiExceptionTest
 {
 

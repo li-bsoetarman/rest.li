@@ -23,6 +23,9 @@ package com.linkedin.common.callback;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 
 /**
  * An exception representing multiple exceptions. Useful for example to deliver multiple
@@ -68,6 +71,8 @@ public class MultiException extends Exception
     // MultiException: Xyz failed (multiple causes follow; only first is shown in stack
     // trace): [java.lang.FooException: bar, java.lang.BazException: quux]
     return super.toString()
-        + " (multiple causes follow; only first is shown in stack trace): " + _causes;
+        + " (multiple causes follow; only first is shown in stack trace): " +
+        _causes.stream().map(t -> Stream.of(t.getStackTrace()).map(s -> s.toString()).collect(Collectors.joining("\n\t")))
+      .collect(Collectors.joining("\n"));
   }
 }

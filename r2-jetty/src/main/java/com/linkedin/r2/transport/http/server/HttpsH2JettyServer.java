@@ -102,6 +102,7 @@ public class HttpsH2JettyServer extends HttpJettyServer
     // Connector supporting HTTP/2, http1.1 and negotiation protocols
     ServerConnector h2Connector =
       new ServerConnector(server, ssl, alpn, h2, new HttpConnectionFactory(https_config, HttpCompliance.RFC2616));
+    h2Connector.setAcceptQueueSize(100);
     h2Connector.setPort(_sslPort);
     server.addConnector(h2Connector);
 
@@ -110,6 +111,7 @@ public class HttpsH2JettyServer extends HttpJettyServer
         server,
         new HttpConnectionFactory(configuration, HttpCompliance.RFC2616),
         new HTTP2CServerConnectionFactory(configuration));
+    h2cConnector.setAcceptQueueSize(100);
     h2cConnector.setPort(_port);
 
     return new ServerConnector[]{h2Connector, h2cConnector};

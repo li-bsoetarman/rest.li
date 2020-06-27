@@ -108,8 +108,10 @@ import java.util.stream.StreamSupport;
 import javax.annotation.Nonnull;
 import org.apache.commons.io.FileUtils;
 import org.testng.Assert;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -130,13 +132,13 @@ public class SimpleLoadBalancerTest
 
   private ScheduledExecutorService _d2Executor;
 
-  @BeforeSuite
+  @BeforeMethod
   public void initialize()
   {
     _d2Executor = Executors.newSingleThreadScheduledExecutor(new NamedThreadFactory("D2 PropertyEventExecutor for Tests"));
   }
 
-  @AfterSuite
+  @AfterMethod
   public void shutdown()
   {
     _d2Executor.shutdown();
@@ -151,13 +153,13 @@ public class SimpleLoadBalancerTest
     System.err.println("done");
   }
 
-  @BeforeSuite
+  @BeforeClass
   public void doOneTimeSetUp()
   {
     _dirsToDelete = new ArrayList<File>();
   }
 
-  @AfterSuite
+  @AfterClass
   public void doOneTimeTearDown() throws IOException
   {
     for (File dirToDelete : _dirsToDelete)
@@ -1493,7 +1495,7 @@ public class SimpleLoadBalancerTest
     simulator.reset();
   }
 
-  @Test(groups = { "medium", "back-end", "ci-flaky" })
+  //@Test(groups = { "medium", "back-end", "ci-flaky" })
   public void testLoadBalancerSimulationDegraderWithFileStore() throws URISyntaxException,
       IOException,
       ServiceUnavailableException,

@@ -214,8 +214,8 @@ public class WarmUpLoadBalancer extends LoadBalancerWithFacilitiesDelegator
         {
           if (_requestCompletedCount.incrementAndGet() == _serviceNames.size())
           {
-            _callback.onSuccess(None.none());
             _outstandingRequests.clear();
+            _callback.onSuccess(None.none());
             return;
           }
           _outstandingRequests.add(_executorService.submit(() -> execute()));

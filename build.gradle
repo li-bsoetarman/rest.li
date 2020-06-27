@@ -290,7 +290,7 @@ subprojects {
   if (System.getenv('TRAVIS') == 'true' && System.getenv('USER') == 'travis') {
     afterEvaluate {
       project.tasks.withType(Test).forEach {
-        it.options.excludeGroups 'ci-flaky'
+//        it.options.excludeGroups 'ci-flaky'
         it.systemProperties['test.httpRequestTimeout'] = '20000'
       }
     }

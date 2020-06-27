@@ -25,7 +25,7 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadLocalRandom;
+//import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -39,8 +39,8 @@ import com.linkedin.d2.discovery.stores.PropertyStoreException;
 
 import static org.testng.Assert.fail;
 import org.testng.Assert;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -56,7 +56,7 @@ public class ZooKeeperEphemeralStoreWithFiltersTest
   private int _port;
   private ExecutorService _executor = Executors.newSingleThreadExecutor();
 
-  @Test(dataProvider = "dataD2ClusterWithNumberOfChildren", groups = { "ci-flaky" })
+  @Test(dataProvider = "dataD2ClusterWithNumberOfChildren")
   public void testPutWithoutPrefixAndFilter(String d2ClusterName, int numberOfChildren)
     throws IOException, InterruptedException, ExecutionException, PropertyStoreException
   {
@@ -86,7 +86,7 @@ public class ZooKeeperEphemeralStoreWithFiltersTest
     tearDown(store);
   }
 
-  @Test(dataProvider = "dataD2ClusterWithNumberOfChildrenAndHashCode", retryAnalyzer = ThreeRetries.class)
+  @Test(dataProvider = "dataD2ClusterWithNumberOfChildrenAndHashCode")
   public void testPutAndGetWithPrefixAndFilter(String d2ClusterName, List<String> childrenNames, int expectedPrefixDuplicates,
                                                List<ZookeeperEphemeralPrefixGenerator> prefixGenerators)
     throws IOException, InterruptedException, ExecutionException, PropertyStoreException
@@ -162,7 +162,7 @@ public class ZooKeeperEphemeralStoreWithFiltersTest
     for (int i = 0; i < 25; i++)
     {
       data[i][0] = "D2Test1Cluster" + i;
-      data[i][1] = ThreadLocalRandom.current().nextInt(25) + 1;
+      data[i][1] = 1; // i + 1; //ThreadLocalRandom.current().nextInt(25) + 1;
     }
 
     return data;
@@ -176,7 +176,7 @@ public class ZooKeeperEphemeralStoreWithFiltersTest
     // 25 test cases with shared prefix generator
     for (int i = 0; i < 25; i++)
     {
-      int numChildren = ThreadLocalRandom.current().nextInt(25) + 1;
+      int numChildren = 1; //i + 1; //ThreadLocalRandom.current().nextInt(25) + 1;
       List<String> children = new ArrayList<>();
       List<ZookeeperEphemeralPrefixGenerator> prefixGenerators = new ArrayList<>();
       AnnouncerHostPrefixGenerator generator = new AnnouncerHostPrefixGenerator("test-machine.subdomain1.subdomain2.com");
@@ -195,7 +195,7 @@ public class ZooKeeperEphemeralStoreWithFiltersTest
     // 25 test cases with unique prefix generator
     for (int i = 25; i < 50; i++)
     {
-      int numChildren = ThreadLocalRandom.current().nextInt(25) + 1;
+      int numChildren = 1; // i - 24; //ThreadLocalRandom.current().nextInt(25) + 1;
       List<String> children = new ArrayList<>();
       List<ZookeeperEphemeralPrefixGenerator> prefixGenerators = new ArrayList<>();
       for (int j = 0; j < numChildren; j++)
@@ -229,13 +229,13 @@ public class ZooKeeperEphemeralStoreWithFiltersTest
     }
   }
 
-  @BeforeSuite
+  @BeforeMethod
   public void setup()
     throws InterruptedException
   {
     try
     {
-      _zkServer = new ZKServer();
+      _zkServer = new ZKServer(52181);
       _zkServer.startup();
       _port = _zkServer.getPort();
       _zkClient = new ZKConnection("localhost:" + _port, 5000);
@@ -247,7 +247,7 @@ public class ZooKeeperEphemeralStoreWithFiltersTest
     }
   }
 
-  @AfterSuite
+  @AfterMethod
   public void tearDown()
     throws IOException, InterruptedException
   {

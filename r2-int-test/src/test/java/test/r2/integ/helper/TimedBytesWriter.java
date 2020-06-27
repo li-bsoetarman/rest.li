@@ -8,11 +8,20 @@ import com.linkedin.r2.message.stream.entitystream.WriteHandle;
 public class TimedBytesWriter extends BytesWriter
 {
   private long _startTime;
-  private long _stopTime;
+  private volatile long _stopTime;
+  private StringBuilder _sb = new StringBuilder();
+
+  public String getLog()
+  {
+    return _sb.toString();
+  }
+
+  private long _total;
 
   public TimedBytesWriter(long total, byte fill)
   {
     super(total, fill);
+    _total = total;
   }
 
   @Override
@@ -25,14 +34,20 @@ public class TimedBytesWriter extends BytesWriter
   @Override
   public void onWritePossible()
   {
+    long written = getWritten();
+    if (written >= (_total - 10))
+    {
+    _sb.append(System.nanoTime()).append(" ").append("total=").append(_total).append(" written=").append(written).append("\n");
+    }
     super.onWritePossible();
   }
 
   @Override
   protected void onFinish()
   {
-    super.onFinish();
     _stopTime = System.currentTimeMillis();
+    _sb.append(System.nanoTime()).append(" onFinish:").append("total=").append(_total).append(" written=").append(getWritten()).append("\n");
+    super.onFinish();
   }
 
   public long getStartTime()

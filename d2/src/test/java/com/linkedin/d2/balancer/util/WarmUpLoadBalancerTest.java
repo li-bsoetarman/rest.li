@@ -83,7 +83,7 @@ public class WarmUpLoadBalancerTest
     Assert.assertEquals(VALID_FILES.size(), requestCount.get());
   }
 
-  @Test(timeOut = 10000, groups = { "ci-flaky" })
+  @Test(timeOut = 60000, groups = { "ci-flaky" })
   public void testDeletingFilesAfterShutdown() throws InterruptedException, ExecutionException, TimeoutException
   {
     createDefaultServicesIniFiles();
@@ -101,8 +101,10 @@ public class WarmUpLoadBalancerTest
 
     FutureCallback<None> callback = new FutureCallback<>();
     warmUpLoadBalancer.start(callback);
-    callback.get(5000, TimeUnit.MILLISECONDS);
-
+    callback.get(1, TimeUnit.MINUTES);
+     
+    Assert.assertTrue(callback.isDone());
+     
     FutureCallback<None> shutdownCallback = new FutureCallback<>();
     warmUpLoadBalancer.shutdown(() -> shutdownCallback.onSuccess(None.none()));
     shutdownCallback.get(5000, TimeUnit.MILLISECONDS);

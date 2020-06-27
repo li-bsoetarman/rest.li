@@ -131,7 +131,7 @@ public class TestStreamEcho extends AbstractServiceTest
     Assert.assertTrue(reader.allBytesCorrect());
   }
 
-  @Test(groups = { "ci-flaky" })
+  @Test //(groups = { "ci-flaky" })
   public void testBackPressureEcho() throws Exception
   {
     TimedBytesWriter writer = new TimedBytesWriter(SMALL_BYTES_NUM, BYTE);
@@ -173,6 +173,9 @@ public class TestStreamEcho extends AbstractServiceTest
 
     _client.streamRequest(request, callback);
     latch.await(60000, TimeUnit.MILLISECONDS);
+    
+    Thread.sleep(10000);
+    
     Assert.assertNull(error.get());
     Assert.assertEquals(status.get(), RestStatus.OK);
     Assert.assertEquals(reader.getTotalBytes(), SMALL_BYTES_NUM);
@@ -182,11 +185,14 @@ public class TestStreamEcho extends AbstractServiceTest
     long clientReceiveTimespan = reader.getStopTime() - reader.getStartTime();
     double diff = Math.abs(clientReceiveTimespan - clientSendTimespan);
     double diffRatio = diff / clientSendTimespan;
+
+    System.out.println(writer.getLog());
+
     // make it generous to reduce the chance occasional test failures
     Assert.assertTrue(
         diffRatio < 0.5,
         "Send/receive time delta is " + diff + " but expected to be less than 0.5. Send time span is "
-            + clientSendTimespan + " and receive time span is " + clientReceiveTimespan);
+            + clientSendTimespan + " and receive time span is " + clientReceiveTimespan + "\n" + writer.getLog());
   }
 
   @Test

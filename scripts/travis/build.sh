@@ -19,6 +19,9 @@ fi
 
 # Run the actual build
 ./gradlew build $EXTRA_ARGS
+#./gradlew --rerun-tasks :d2:test --tests com.linkedin.d2.discovery.stores.zk.ZooKeeperEphemeralStoreWithFiltersTest.testPutWithoutPrefixAndFilter
+#./gradlew --rerun-tasks :d2:test
+#./gradlew --rerun-tasks :r2:test
 EXIT_CODE=$?
 
 # Kill the waiter job

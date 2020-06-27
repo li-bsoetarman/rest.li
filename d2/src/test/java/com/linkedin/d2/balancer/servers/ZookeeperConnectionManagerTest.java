@@ -51,7 +51,7 @@ public class ZookeeperConnectionManagerTest
 {
   private static final Logger LOG = LoggerFactory.getLogger(ZookeeperConnectionManagerTest.class);
 
-  public static final int PORT = 11811;
+  public static int PORT = 0;
 
   protected ZKServer _zkServer;
   private String _uri;
@@ -70,6 +70,7 @@ public class ZookeeperConnectionManagerTest
     try
     {
       _zkServer = new ZKServer(PORT);
+      PORT = _zkServer.getPort();
       _zkServer.startup();
     }
     catch (IOException e)
@@ -438,7 +439,7 @@ public class ZookeeperConnectionManagerTest
     executorService.shutdown();
   }
 
-  @Test(invocationCount = 10, timeOut = 10000, groups = { "ci-flaky" })
+  @Test(invocationCount = 1, timeOut = 30000, groups = { "ci-flaky" })
   public void testMarkUpAndDownMultipleTimesFinalUp()
     throws Exception
   {
@@ -447,7 +448,9 @@ public class ZookeeperConnectionManagerTest
 
     FutureCallback<None> managerStartCallback = new FutureCallback<None>();
     manager.start(managerStartCallback);
-    managerStartCallback.get(10, TimeUnit.SECONDS);
+    managerStartCallback.get(1, TimeUnit.MINUTES);
+    
+    Assert.assertTrue(managerStartCallback.isDone());
 
     // set up many concurrent callbacks
     FutureCallback<None> allMarkupsDownsSucceed = new FutureCallback<>();
@@ -463,6 +466,8 @@ public class ZookeeperConnectionManagerTest
       });
     }
     allMarkupsDownsSucceed.get();
+    
+    Thread.sleep(10000);
 
     // data validation
     dataValidation(_uri, _cluster, WEIGHT);

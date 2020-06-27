@@ -173,6 +173,9 @@ public class TestStreamEcho extends AbstractServiceTest
 
     _client.streamRequest(request, callback);
     latch.await(60000, TimeUnit.MILLISECONDS);
+    
+    Thread.sleep(10000);
+    
     Assert.assertNull(error.get());
     Assert.assertEquals(status.get(), RestStatus.OK);
     Assert.assertEquals(reader.getTotalBytes(), SMALL_BYTES_NUM);

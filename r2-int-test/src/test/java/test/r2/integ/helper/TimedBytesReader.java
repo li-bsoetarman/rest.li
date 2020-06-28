@@ -10,7 +10,7 @@ import com.linkedin.r2.message.stream.entitystream.ReadHandle;
 public class TimedBytesReader extends BytesReader
 {
   private long _startTime;
-  private long _stopTime;
+  private volatile long _stopTime;
 
   public TimedBytesReader(byte b, Callback<None> callback)
   {
@@ -27,8 +27,8 @@ public class TimedBytesReader extends BytesReader
   @Override
   public void onDone()
   {
-    super.onDone();
     _stopTime = System.currentTimeMillis();
+    super.onDone();
   }
 
   public long getStartTime()

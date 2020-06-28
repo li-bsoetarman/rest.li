@@ -131,7 +131,7 @@ public class TestStreamEcho extends AbstractServiceTest
     Assert.assertTrue(reader.allBytesCorrect());
   }
 
-  @Test(groups = { "ci-flaky" })
+  @Test //(groups = { "ci-flaky" })
   public void testBackPressureEcho() throws Exception
   {
     TimedBytesWriter writer = new TimedBytesWriter(SMALL_BYTES_NUM, BYTE);

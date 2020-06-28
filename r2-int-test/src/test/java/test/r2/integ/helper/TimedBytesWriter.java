@@ -8,7 +8,7 @@ import com.linkedin.r2.message.stream.entitystream.WriteHandle;
 public class TimedBytesWriter extends BytesWriter
 {
   private long _startTime;
-  private long _stopTime;
+  private volatile long _stopTime;
 
   public TimedBytesWriter(long total, byte fill)
   {
@@ -31,8 +31,8 @@ public class TimedBytesWriter extends BytesWriter
   @Override
   protected void onFinish()
   {
-    super.onFinish();
     _stopTime = System.currentTimeMillis();
+    super.onFinish();
   }
 
   public long getStartTime()
